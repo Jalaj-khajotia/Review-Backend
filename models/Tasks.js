@@ -26,7 +26,9 @@ TasksModel.prototype.findTaskByProperty = function(prop, value) {
 
 TasksModel.prototype.getTasks = function(start, limit) {
     var tasks = this.getAllTasks();
-    return tasks.slice(start, limit + 1);
+        
+    return tasks;
+   // .slice(start, limit + 1);
 };
 
 TasksModel.prototype.getTask = function(id) {

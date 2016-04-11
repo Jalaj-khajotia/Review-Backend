@@ -19,8 +19,14 @@ TasksController.prototype.index = function(request, reply) {
     if (limit == null) {
         limit = start + 9
     }
-
-    reply(this.tasksModel.getTasks(start, limit));
+     this.tasksModel.getTasks(start, limit).
+        then(function(reviews) {
+            console.log(reviews);            
+            return reply(reviews);
+        }, function(error) {
+            console.log(error);
+        });
+    ;
 };
 
 // [GET] /tasks/{id}

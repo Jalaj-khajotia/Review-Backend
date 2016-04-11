@@ -1,35 +1,45 @@
 {
-  "name": "hapi-restful-api-example",
-  "version": "1.0.2",
-  "description": "An example of a restful api built using hapi.js",
-  "main": "index.js",
-  "keywords": [
-    "hapi",
-    "hapijs",
-    "api",
-    "restful",
-    "example"
-  ],
-  "scripts": {
-    "test": "NODE_ENV=test ./node_modules/.bin/lab --assert should"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/rcorral/hapi-restful-api-example.git"
-  },
-  "author": "Rafael Corral",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/rcorral/hapi-restful-api-example/issues"
-  },
-  "homepage": "https://github.com/rcorral/hapi-restful-api-example",
-  "dependencies": {
-    "boom": "^2.6.0",
-    "hapi": "~8.0.0",
-    "joi": "^5.0.1"
-  },
-  "devDependencies": {
-    "lab": "^5.0.2",
-    "should": "^4.3.0"
-  }
+    "name": "hapi-restful-api-example",
+    "version": "1.0.2",
+    "description": "An example of a restful api built using hapi.js",
+    "main": "index.js",
+    "keywords": [
+        "hapi",
+        "hapijs",
+        "api",
+        "restful",
+        "example"
+    ],
+    "scripts": {
+        "test": "NODE_ENV=test ./node_modules/.bin/lab --assert should"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/rcorral/hapi-restful-api-example.git"
+    },
+    "author": "Rafael Corral",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/rcorral/hapi-restful-api-example/issues"
+    },
+    "homepage": "https://github.com/rcorral/hapi-restful-api-example",
+    "dependencies": {
+        "boom": "^2.6.0",
+        "hapi": "~8.0.0",
+        "joi": "^5.0.1",
+        "sequelize": "^2.0.0-rc7",
+        "sqlite3": "^3.0.4",
+        "bluebird": "^2.9.25",
+        "boom": "~2.7.1",
+        "good": "~6.1.2",
+        "good-console": "~5.0.0",
+        "hapi-auth-cookie": "~2.2.0"
+    },
+    "devDependencies": {
+        "lab": "^5.0.2",
+        "should": "^4.3.0",
+        "gulp": "^3.8.10",
+        "gulp-nodemon": "^1.0.5",
+        "sequelize-cli": "^1.0.3"
+    }
 }
