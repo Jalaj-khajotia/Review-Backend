@@ -1,47 +1,56 @@
 'use strict';
 
 var crypto = require('crypto');
+var Promise = require('bluebird');
 
-function TasksModel(database) {
+function UsersModel(database) {
     this.db = database;
 };
 
-TasksModel.prototype.getAllTasks = function() {
-    return this.db.get('tasks') || [];
+UsersModel.prototype.getAllUsers = function() {
+    return this.db.get('users') || [];
 };
 
-TasksModel.prototype.findTaskByProperty = function(prop, value) {
-    var task, i, len;
-    var tasks = this.getAllTasks();
-
-    for (i = 0, len = tasks.length; i < len; i++) {
-        task = tasks[i];
-        if (task[prop] === value) {
-            return task;
-        }
-    }
-
-    return null;
-};
-
-TasksModel.prototype.getTasks = function(start, limit) {
-    var tasks = this.getAllTasks();
+UsersModel.prototype.findUsersByProperty = function(prop, value) {
+    var user, i, len;
+    var users = this.getAllUsers();
+    return new Promise(function(fulfill, reject) {
+        users.then(function(_user) {
         
-    return tasks;
-   // .slice(start, limit + 1);
+            for (i = 0, len = _user.length; i < len; i++) {
+                user = _user[i];
+                if (_user[i].id == value) {                      
+                    return fulfill( _user[i]);
+                }
+            }
+            return reject('no user found');
+        }, function(error) {
+            return reject(error);
+        });
+    })
+
+
 };
 
-TasksModel.prototype.getTask = function(id) {
-    var task = this.findTaskByProperty('id', id);
+UsersModel.prototype.getUsers = function(start, limit) {
+    var tasks = this.getAllUsers();
+    // console.log(tasks);
 
+    return tasks;
+    // .slice(start, limit + 1);
+};
+
+UsersModel.prototype.getUser = function(id) {
+    var task = this.findUsersByProperty('id', id);
+     return task;
     if (!task) {
         throw new Error('Task doesn\'t exists.');
     }
-    return task;
+   
 };
 
-TasksModel.prototype.addTask = function(newTask) {
-    var tasks = this.getAllTasks();
+UsersModel.prototype.addUser = function(newTask) {
+    var tasks = this.getAllUsers();
     newTask = newTask.trim();
 
     // We don't want duplicates
@@ -62,7 +71,7 @@ TasksModel.prototype.addTask = function(newTask) {
     return task;
 };
 
-TasksModel.prototype.updateTask = function(id, updatedTask) {
+UsersModel.prototype.updateUser = function(id, updatedTask) {
     updatedTask = updatedTask.trim();
 
     var task = this.findTaskByProperty('id', id);
@@ -76,7 +85,7 @@ TasksModel.prototype.updateTask = function(id, updatedTask) {
     return task;
 };
 
-TasksModel.prototype.deleteTask = function(id) {
+UsersModel.prototype.deleteUser = function(id) {
     if (!this.findTaskByProperty('id', id)) {
         throw new Error('Task doesn\'t exists.');
     }
@@ -95,4 +104,4 @@ TasksModel.prototype.deleteTask = function(id) {
     }
 };
 
-module.exports = TasksModel;
+module.exports = UsersModel;

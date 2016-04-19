@@ -15,63 +15,10 @@ exports.register = function(server, options, next) {
     // when declaring handlers
 
     server.bind(tasksController);
-        server.register([
-        {
-            register: require('hapi-auth-cookie')
-        }
-    ], function(err) {
-        if (err) {
-            console.error('Failed to load a plugin:', err);
-            throw err;
-        }
-
-        // Set our server authentication strategy
-        server.auth.strategy('standard', 'cookie', {
-            password: 'somecrazycookiesecretthatcantbeguesseswouldgohere', // cookie secret
-            cookie: 'app-cookie', // Cookie name
-            isSecure: false, // required for non-https applications
-            ttl: 24 * 60 * 60 * 1000 // Set session to 1 day
-        });
-
-    });
-
-    server.auth.default({
-        strategy: 'standard',
-        scope: ['admin']
-    });
+      
 
     // Declare routes
-    server.route([{
-        method: 'POST',
-        path: '/login',
-        config: {
-            auth: false,
-            validate: {
-                payload: {
-                    email: Joi.string().email().required(),
-                    password: Joi.string().min(2).max(200).required()
-                }
-            },
-            handler: function(request, reply) {
-
-                getValidatedUser(request.payload.email, request.payload.password)
-                    .then(function(user){
-
-                        if (user) {
-                            request.auth.session.set(user);
-                            return reply('Login Successful!');
-                        } else {
-                            return reply(Boom.unauthorized('Bad email or password'));
-                        }
-
-                    })
-                    .catch(function(err){
-                        return reply(Boom.badImplementation());
-                    });
-
-            }
-        }
-    },
+    server.route([
         {
             method: 'GET',
             path: '/tasks',

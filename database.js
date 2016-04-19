@@ -22,17 +22,31 @@ var sequelize = new Sequelize(
 var reviewModel = require('./dbmodels/review')(sequelize, Sequelize);
 var productModel = require('./dbmodels/product')(sequelize, Sequelize);
 var userModel = require('./dbmodels/user')(sequelize, Sequelize);
+var imageModel = require('./dbmodels/images')(sequelize, Sequelize);
+
 reviewModel.belongsTo(productModel);
 productModel.hasMany(reviewModel);
+productModel.hasMany(imageModel);
+reviewModel.belongsTo(userModel);
 
 module.exports = function() {
 
-    var store = { "tasks": [{ "name": "BLU", "rating": "4", "desc": "", "image": "" }, { "name": "", "rating": "5", "desc": "", "image": "" }] };
+    var store = { "tasks": [{ "name": "BLU", "rating": "4", "desc": "", "image": "" }, 
+    { "name": "", "rating": "5", "desc": "", "image": "" }] };
 
     function Database() {};
 
     Database.prototype.get = function(key) {
-        return productModel.findAll({ include: [{ all: true }] });
+        if (key === 'products') {
+            return productModel.findAll({ include: [{ all: true }] });
+        } else if (key === 'tasks') {
+            return productModel.findAll({ include: [{ all: true }] });
+        } else if (key === 'users') {
+            return userModel.findAll({ include: [{ all: true }] });
+        } else if (key === 'reviews') {
+            return reviewModel.findAll({ include: [{ all: true }] });
+        }
+
         /* reviewModel.findAll().
             then(function(reviews) {
                 console.log('reviews are ');

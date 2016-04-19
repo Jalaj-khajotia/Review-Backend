@@ -19,9 +19,11 @@ TasksController.prototype.index = function(request, reply) {
     if (limit == null) {
         limit = start + 9
     }
+    console.log('loading');
+    
      this.tasksModel.getTasks(start, limit).
         then(function(reviews) {
-            console.log(reviews);            
+           // console.log(reviews);            
             return reply(reviews);
         }, function(error) {
             console.log(error);
